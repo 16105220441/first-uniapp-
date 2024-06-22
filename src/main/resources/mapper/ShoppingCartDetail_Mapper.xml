@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.shoppingspring.mapper.ShoppingCartDetail_Mapper">
+
+
+    <insert id="addToCartDetail">
+        insert into shopping_datasource.shopping_cart_detail
+            (product_id,quantity,create_time,update_time,item_total_price,shopping_cart_id,customer_id)
+        value
+            (#{productId},#{quantity},now(),now(),
+             #{itemTotalPrice},#{shoppingCartId},#{customerId})
+    </insert>
+
+
+    <select id="isProductInCart"
+            resultType="shoppingCartDetail">
+        select * from shopping_datasource.shopping_cart_detail where
+            product_id = #{productId} and customer_id = #{customerId}
+    </select>
+
+    <update id="updateProductQuantity">
+        update shopping_datasource.shopping_cart_detail
+        set quantity    =
+                quantity + #{quantity},
+            item_total_price
+                        =
+                shopping_cart_detail.item_total_price + #{itemTotalPrice},
+            update_time = now()
+        where detail_id = #{detailId}
+    </update>
+
+    <update id="update_totalQuantityAndTotalprice" >
+        update shopping_datasource.shopping_cart_detail set quantity =
+                                                                #{quantity},
+                                                            item_total_price
+                                                                     = #{itemTotalPrice}
+        where product_id = #{productId} and customer_id = #{customerId}
+    </update>
+
+    <delete id="delete_cartDetail">
+        delete
+        from shopping_datasource.shopping_cart_detail
+        where product_id
+            =
+              #{productId}
+          and customer_id
+            =
+              #{customerId}
+    </delete>
+</mapper>

@@ -1,0 +1,30 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 113000
+    url: jdbc:mysql://localhost:3306/shopping_datasource?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: org.example.shoppingspring
+
+logging:
+  level:
+    org.example.shoppingspring: debug
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n)'
+
+#分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+

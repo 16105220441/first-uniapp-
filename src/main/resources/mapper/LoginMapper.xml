@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.shoppingspring.mapper.LoginMapper">
+
+    <select id="login"
+            resultType="customers" parameterType="customers">
+        select * from shopping_datasource.customers where phone = #{customers.phone}
+    </select>
+    <select id="findByPhone"
+            resultType="customers">
+        select * from shopping_datasource.customers where phone = #{phone}
+    </select>
+
+    <insert id="refister">
+        insert into shopping_datasource.customers (phone) value (#{phone})
+    </insert>
+</mapper>

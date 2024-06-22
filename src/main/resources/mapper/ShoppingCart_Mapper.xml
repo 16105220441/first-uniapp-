@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.shoppingspring.mapper.ShoppingCart_Mapper">
+    <insert id="addCart" parameterType="java.lang.Integer" >
+        insert into shopping_datasource.shopping_cart (customers_id) value
+            (#{customerId})
+    </insert>
+
+    <select id="get_byCustomerId" resultType="shoppingCart">
+        select * from shopping_datasource.shopping_cart where customers_id =
+                                                              #{customerId}
+    </select>
+
+
+    <update id="update_info">
+        update shopping_datasource.shopping_cart
+        set total_price =
+                total_price
+                    + #{totalPrice},
+            total_quantity = total_quantity + #{quantity}
+        where id = #{shoppingCartId}
+    </update>
+
+    <select id="get_cartList"
+            resultMap="cartList">
+        select * from shopping_datasource.shopping_cart left join
+                      shopping_datasource.shopping_cart_detail scd on
+                          shopping_cart.id = scd.shopping_cart_id left join
+                      shopping_datasource.products p on scd.product_id =
+                                                       p.product_id
+        where shopping_cart.customers_id = #{customerId}
+    </select>
+    <resultMap id="cartList" type="shoppingCart">
+        <id property="id" column="id"/>
+        <result property="customersId" column="customers_id"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="totalQuantity" column="total_quantity"/>
+        <collection property="shoppingCartDetails" ofType="shoppingCartDetail">
+            <id property="detailId" column="detail_id"/>
+           <!-- <result property="productId" column="product_id"/>-->
+            <result property="productId" column="product_id"/>
+            <result property="quantity" column="quantity"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="itemTotalPrice" column="item_total_price"/>
+            <association property="products" javaType="products">
+                <id property="productId" column="product_id"/>
+                <result property="name" column="name"/>
+                <result property="productImage"
+                        column="product_image"/>
+                <result property="discountPrice"
+                        column="discount_price"/>
+
+            </association>
+        </collection>
+    </resultMap>
+
+
+</mapper>
