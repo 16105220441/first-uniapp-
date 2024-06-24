@@ -5,10 +5,12 @@ import cn.hutool.core.util.IdUtil;
 
 import org.example.shoppingspring.config.captchaConfig;
 import org.example.shoppingspring.domain.Customers;
+import org.example.shoppingspring.domain.ShoppingAddress;
 import org.example.shoppingspring.domain.ShoppingCart;
 import org.example.shoppingspring.exception.LoginFailException;
 import org.example.shoppingspring.exception.ValidateCodeException;
 import org.example.shoppingspring.service.LoginService;
+import org.example.shoppingspring.service.ShoppingAddress_Service;
 import org.example.shoppingspring.service.ShoppingCart_Service;
 import org.example.shoppingspring.util.ImageCaptchaUtil;
 import org.example.shoppingspring.util.Jedis_CodeUtil;
@@ -27,6 +29,9 @@ public class LoginController {
 
     @Autowired
     ShoppingCart_Service shoppingCart_service;
+
+    @Autowired
+    ShoppingAddress_Service shoppingAddress_service;
 
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
@@ -101,7 +106,7 @@ public class LoginController {
     @PostMapping("/logIn")
     public Map<String,Object> login(@RequestBody Customers customers) throws LoginFailException{
         /*customers.setPassword(SecureUtil.sha1(customers.getPassword()));*/
-        System.out.println(customers);
+
         Customers loginCustomer = this.loginService.findByPhone(customers.getPhone());
         if(loginCustomer == null){
             register(customers.getPhone());
@@ -112,6 +117,11 @@ public class LoginController {
         if (shoppingCart == null) {
             shoppingCart_service.addCart((int) loginCustomer.getCustomerId());
 
+        }
+        ShoppingAddress address =
+                shoppingAddress_service.getInfo((int) loginCustomer.getCustomerId());
+        if(address == null){
+            shoppingAddress_service.add((int) loginCustomer.getCustomerId());
         }
         Map<String,Object> tokenMap = new HashMap<>();
         tokenMap.put("customerId",loginCustomer.getCustomerId());

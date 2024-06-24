@@ -11,7 +11,7 @@ public interface ShoppingCart_Service {
     void update_info(long shoppingCartId, double totalPrice,
                              long quantity);
 
-    ShoppingCart get_cartList(int customerId);
+    ShoppingCart get_cartList(String  customerId,String detailId);
 
 
 

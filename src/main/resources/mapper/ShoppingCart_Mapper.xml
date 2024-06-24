@@ -30,7 +30,15 @@
                           shopping_cart.id = scd.shopping_cart_id left join
                       shopping_datasource.products p on scd.product_id =
                                                        p.product_id
-        where shopping_cart.customers_id = #{customerId}
+        <where>
+            <if test="customerId != null and customerId != ''">
+                shopping_cart.customers_id = #{customerId}
+            </if>
+
+        <if test="detailId != null and detailId != ''">
+            and scd.detail_id = #{detailId}
+        </if>
+        </where>
     </select>
     <resultMap id="cartList" type="shoppingCart">
         <id property="id" column="id"/>

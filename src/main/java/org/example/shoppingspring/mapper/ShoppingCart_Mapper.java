@@ -14,7 +14,8 @@ public interface ShoppingCart_Mapper {
                            @Param("totalPrice") double totalPrice,
                            @Param("quantity") long quantity);
 
-    ShoppingCart get_cartList(@Param("customerId") int customerId);
+    ShoppingCart get_cartList(@Param("customerId") String  customerId,
+                              @Param("detailId") String detailId);
 
 
 }

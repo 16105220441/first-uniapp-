@@ -41,8 +41,8 @@ public class ShoppingCart_ServiceImpl implements ShoppingCart_Service {
      * @return
      */
     @Override
-    public ShoppingCart get_cartList(int customerId) {
-        return shoppingCart_mapper.get_cartList(customerId);
+    public ShoppingCart get_cartList(String customerId,String detailId) {
+        return shoppingCart_mapper.get_cartList(customerId,detailId);
     }
 
 

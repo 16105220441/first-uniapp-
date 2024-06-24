@@ -4,19 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoppingAddress {
 
-  private long id;
+  private long addressId;
   private long customerId;
-  private String recipient;
-  private String province;
-  private String city;
-  private String district;
-  private String detail;
-  private long isDefault;
-
-
+private List<ShoppingAddressDetail> shoppingAddressDetails;
 }

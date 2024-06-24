@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.shoppingspring.mapper.ShoppingAddress_Mapper">
+
+    <insert id="add">
+        insert into shopping_datasource.shopping_address (customer_id) value
+            (#{customerId})
+    </insert>
+
+
+    <select id="getInfo"
+            resultType="shoppingAddress">
+        select *
+        from shopping_datasource.shopping_address
+        where customer_id
+                  = #{customerId}
+    </select>
+
+    <select id="getList"
+            resultMap="addressList">
+        select *
+        from shopping_datasource.shopping_address
+                 left join shopping_datasource.shopping_address_detail sad
+                           on shopping_address.address_id = sad.address_id
+        where shopping_address.customer_id = #{customerId} and
+            sad.customer_id = #{customerId} order by sad.is_default
+
+    </select>
+    <resultMap id="addressList" type="shoppingAddress">
+        <id property="addressId" column="address_id"/>
+        <result property="customerId" column="customer_id"/>
+        <collection property="shoppingAddressDetails" ofType="shoppingAddressDetail">
+            <id property="addressDetailId" column="address_detail_id"/>
+            <result property="customerId" column="customer_id"/>
+            <result property="name" column="name"/>
+            <result property="province" column="province"/>
+            <result property="city" column="city"/>
+            <result property="county" column="country"/>
+            <result property="addressDetail" column="address_detail"/>
+            <result property="isDefault" column="is_default"/>
+            <result property="tel" column="tel"/>
+            <result property="addressId" column="address_id"/>
+        </collection>
+    </resultMap>
+
+    <update id="update_isDefault">
+        update shopping_datasource.shopping_address_detail set is_default = 'false'
+        where customer_id != #{customerId}
+    </update>
+</mapper>

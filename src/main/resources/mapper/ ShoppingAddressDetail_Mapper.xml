@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="org.example.shoppingspring.mapper.ShoppingAddressDetail_Mapper">
+
+    <insert id="add_addressDetail">
+        insert into shopping_datasource.shopping_address_detail
+        (customer_id, name, province, city, county,
+         address_detail, is_default, tel, address_id) value
+            (#{addressDetail.customerId},
+             #{addressDetail.name}, #{addressDetail.province},
+             #{addressDetail.city}, #{addressDetail.county},
+             #{addressDetail.addressDetail}, #{addressDetail.isDefault},
+             #{addressDetail.tel}, #{addressDetail.addressId})
+    </insert>
+
+    <select id="getInfo"
+            resultType="shoppingAddressDetail">
+        select * from shopping_datasource.shopping_address_detail where
+            address_detail_id = #{addressDetailId}
+    </select>
+    <select id="get_default"
+            resultType="shoppingAddressDetail">
+     select * from shopping_datasource.shopping_address_detail  where
+         customer_id = #{customerId} and is_default = #{isDefault}
+    </select>
+
+
+     <update id="updateInfo">
+        update shopping_datasource.shopping_address_detail
+        set name       =
+                #{shoppingAddressDetail.name},
+            province   = #{shoppingAddressDetail.province},
+            city       = #{shoppingAddressDetail.city},
+            county    = #{shoppingAddressDetail.addressDetail},
+            is_default = #{shoppingAddressDetail.isDefault},
+            tel        = #{shoppingAddressDetail.tel}
+        where address_detail_id = #{shoppingAddressDetail.addressDetailId}
+    </update>
+    <update id="update_default">
+        update shopping_datasource.shopping_address_detail
+        set is_default =
+                IF(address_detail_id =
+                    #{shoppingAddressDetail.addressDetailId}, 'true', 'false')
+        where customer_id = #{shoppingAddressDetail.customerId}
+    </update>
+
+
+    <delete id="delete">
+        delete from shopping_datasource.shopping_address_detail where
+            address_detail_id = #{addressDetailId}
+    </delete>
+</mapper>

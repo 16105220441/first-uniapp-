@@ -27,11 +27,22 @@ public class ShoppingCart_Controller {
     }
 
     @GetMapping("/list")
-    public Map<String,Object> get_cartList(@RequestParam int customerId){
-        ShoppingCart shoppingCart =
-                shoppingCart_service.get_cartList(customerId);
+    public Map<String,Object> get_cartList(@RequestParam(required = false) String customerId,
+                                           @RequestParam(required = false) String detailId){
+        List<ShoppingCart> shoppingCarts = new java.util.ArrayList<>(List.of());
+        if(detailId != null){
+            String []detailIdArray = detailId.split(",");
+
+            for (String s : detailIdArray) {
+                shoppingCarts.add(shoppingCart_service.get_cartList(customerId, s));
+            }
+        }
+        else{
+            shoppingCarts.add(shoppingCart_service.get_cartList(customerId, null));
+        }
+
         Map<String,Object> map = new HashMap<>();
-        map.put("cartList",shoppingCart);
+        map.put("cartList",shoppingCarts);
         return map;
     }
 
