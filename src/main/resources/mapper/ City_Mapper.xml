@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.shoppingspring.mapper.City_Mapper">
+    <select id="selectByProvinceId"
+            resultType="tlCity">
+        select CityID,CityName from shopping_datasource.tl_city where
+            ProvinceID = #{provinceId}
+    </select>
+    <select id="selectByCityName" resultType="java.lang.Integer">
+        select CityID from shopping_datasource.tl_city where CityName = #{cityName}
+    </select>
+</mapper>
