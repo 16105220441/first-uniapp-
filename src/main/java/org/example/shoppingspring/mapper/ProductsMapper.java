@@ -14,7 +14,8 @@ public interface ProductsMapper {
 
     List<Products> getProducts();
 
-    List<Products> getProID(@Param("categoryId") String categoryId, @Param("productName") String productName);
+    List<Products> getProID(@Param("categoryId") Integer categoryId, @Param(
+            "productName") String productName,@Param("orderType") String orderType);
 
     Products getDetail(@Param("id") int productId);
 

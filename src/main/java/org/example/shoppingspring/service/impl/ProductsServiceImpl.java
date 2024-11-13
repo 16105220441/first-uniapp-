@@ -36,11 +36,11 @@ public class ProductsServiceImpl implements ProductsService{
      * @return
      */
     @Override
-    public List<Products> getProID(String categoryId, String  productName,
+    public List<Products> getProID(Integer categoryId, String  productName,
                                    int page,
-                                   int travelPageSize) {
+                                   int travelPageSize,String orderType) {
         PageHelper.startPage(page,travelPageSize);
-        return productsMapper.getProID(categoryId,productName);
+        return productsMapper.getProID(categoryId,productName,orderType);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     /**
-     * @param id
+     * @param pageSize
      * @param page
      * @param productId
      * @return

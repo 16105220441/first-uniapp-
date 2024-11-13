@@ -19,7 +19,7 @@ public class Result<T> {
      * 成功
      */
     public static <T> Result<T> success(T data) {
-        Result<T> result = new Result<T>();
+        Result<T> result = new Result<>();
         result.setCode(200);
         result.setMessage("success");
         result.setData(data);
@@ -30,6 +30,6 @@ public class Result<T> {
      * 失败
      */
     public static <T> Result<T> error(int code, String message) {
-        return new Result(code, message);
+        return new Result<>(code, message);
     }
 }

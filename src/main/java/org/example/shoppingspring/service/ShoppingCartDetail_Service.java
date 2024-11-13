@@ -14,5 +14,7 @@ public interface ShoppingCartDetail_Service {
                                            long customerId,
                                            long quantity, double itemTotalPrice);
 
-    void delete_cartDetail(int productId, int customerId);
+    int delete_cartDetail(int productId, int customerId);
+
+    int get_cartProTotalNum(int customerId);
 }

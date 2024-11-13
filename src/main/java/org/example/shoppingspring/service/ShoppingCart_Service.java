@@ -2,6 +2,8 @@ package org.example.shoppingspring.service;
 
 import org.example.shoppingspring.domain.ShoppingCart;
 
+import java.util.List;
+
 public interface ShoppingCart_Service {
 
     void addCart(int customerId);
@@ -11,8 +13,11 @@ public interface ShoppingCart_Service {
     void update_info(long shoppingCartId, double totalPrice,
                              long quantity);
 
-    ShoppingCart get_cartList(String  customerId,String detailId);
+    List<ShoppingCart> get_cartList(String  customerId, String detailId,
+                                    int pageNum, int  pageSize);
+
+    List<ShoppingCart> get_cartList(String  customerId,String detailId);
 
 
-
+    int get_cartProTotalNum(int customerId);
 }

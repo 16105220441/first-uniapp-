@@ -3,6 +3,7 @@ package org.example.shoppingspring.controller;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
 
+import cn.hutool.core.util.RandomUtil;
 import org.example.shoppingspring.config.captchaConfig;
 import org.example.shoppingspring.domain.Customers;
 import org.example.shoppingspring.domain.ShoppingAddress;
@@ -15,6 +16,8 @@ import org.example.shoppingspring.service.ShoppingCart_Service;
 import org.example.shoppingspring.util.ImageCaptchaUtil;
 import org.example.shoppingspring.util.Jedis_CodeUtil;
 import org.example.shoppingspring.util.JwtUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ import java.util.Map;
 
 @RestController
 public class LoginController {
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     final
     LoginService loginService;
 
@@ -126,6 +130,7 @@ public class LoginController {
         Map<String,Object> tokenMap = new HashMap<>();
         tokenMap.put("customerId",loginCustomer.getCustomerId());
         String token = JwtUtils.getToken(tokenMap);
+        log.info(token);
         Map<String,Object> map = new HashMap<>();
         map.put("token",token);
         map.put("customerId",loginCustomer.getCustomerId());
@@ -136,8 +141,8 @@ public class LoginController {
 
     @PostMapping("/register")
     public void register(String phone){
-
-           loginService.register(phone);
+        String nickName = RandomUtil.randomString("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 6);
+           loginService.register(phone,nickName);
 
 
     }

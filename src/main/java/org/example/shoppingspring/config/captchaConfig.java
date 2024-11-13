@@ -9,13 +9,13 @@ public class captchaConfig {
 
     private  static final int count = 4;
     public LineCaptcha getLineCaptcha(){
-        return CaptchaUtil.createLineCaptcha(75,35,count,100);
+        return CaptchaUtil.createLineCaptcha(75,35,count,50);
 
     }
 
     public String getMessageCode(){
         RandomGenerator randomGenerator = new RandomGenerator("0123456789", 6);
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200,100);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100,50);
         lineCaptcha.setGenerator(randomGenerator);
         lineCaptcha.createCode();
         return lineCaptcha.getCode();

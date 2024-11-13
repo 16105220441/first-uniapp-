@@ -12,8 +12,8 @@ public interface ProductsService{
 
     List<Products> getProducts(int page, int travelPageSize);
 
-    List<Products> getProID(String categoryId, String  productName, int page,
-                            int travelPageSize);
+    List<Products> getProID(Integer categoryId, String  productName, int page,
+                            int travelPageSize,String orderType);
 
     Products getDetail(int productId);
 

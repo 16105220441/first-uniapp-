@@ -4,6 +4,8 @@ import org.example.shoppingspring.domain.ShoppingAddress;
 import org.example.shoppingspring.domain.ShoppingAddressDetail;
 import org.example.shoppingspring.service.ShoppingAddressDetail_Service;
 import org.example.shoppingspring.service.ShoppingAddress_Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.Map;
 @RequestMapping("/address/detail")
 public class ShoppingAddressDetail_Controller {
 
+    private static final Logger log = LoggerFactory.getLogger(ShoppingAddressDetail_Controller.class);
     @Autowired
     ShoppingAddressDetail_Service shoppingAddressDetail_service;
 
@@ -22,6 +25,8 @@ public class ShoppingAddressDetail_Controller {
 
     @PostMapping("/add")
     public void add_addressDetail(@RequestBody ShoppingAddressDetail shoppingAddressDetail){
+
+        log.error(String.valueOf(shoppingAddressDetail));
         ShoppingAddress shoppingAddress =
                 shoppingAddress_service.getInfo((int) shoppingAddressDetail.getCustomerId());
         if(shoppingAddress == null){
@@ -68,6 +73,7 @@ public class ShoppingAddressDetail_Controller {
     public void update_default(@RequestBody ShoppingAddressDetail shoppingAddressDetail){
         shoppingAddressDetail_service.update_default(shoppingAddressDetail);
     }
+
 
 
 }

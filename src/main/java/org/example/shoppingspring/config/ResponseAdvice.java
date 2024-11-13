@@ -32,6 +32,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+       /* System.out.println("o"+o);*/
         if(o instanceof Result)
             return o;
         //处理字符串类型数据，如果Controller返回String的话，SpringBoot是直接返回.

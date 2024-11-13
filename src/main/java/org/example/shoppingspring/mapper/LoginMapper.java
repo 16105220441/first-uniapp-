@@ -10,5 +10,5 @@ public interface LoginMapper {
 
     Customers findByPhone(@Param("phone") String phone);
 
-    void refister(@Param("phone")String phone);
+    void refister(@Param("phone")String phone,@Param("nickName") String nickName);
 }

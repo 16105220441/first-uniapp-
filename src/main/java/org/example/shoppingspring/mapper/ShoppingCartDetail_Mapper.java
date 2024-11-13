@@ -27,5 +27,8 @@ public interface ShoppingCartDetail_Mapper {
                                            @Param("quantity") long quantity,
                                            @Param("itemTotalPrice")double itemTotalPrice);
 
-    void delete_cartDetail(@Param("productId") int productId, @Param("customerId") int customerId);
+    int delete_cartDetail(@Param("productId") int productId, @Param(
+            "customerId") int customerId);
+
+    int get_cartProTotalNum(int customerId);
 }

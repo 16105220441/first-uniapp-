@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.example.shoppingspring.domain.ShoppingCart;
 
+import java.util.List;
+
 @Mapper
 public interface ShoppingCart_Mapper {
     void addCart(@Param("customerId") int customerId);
@@ -14,8 +16,9 @@ public interface ShoppingCart_Mapper {
                            @Param("totalPrice") double totalPrice,
                            @Param("quantity") long quantity);
 
-    ShoppingCart get_cartList(@Param("customerId") String  customerId,
-                              @Param("detailId") String detailId);
+    List<ShoppingCart> get_cartList(@Param("customerId") String  customerId,
+                                    @Param("detailId") String detailId);
 
 
+    int get_cartProTotalNum(@Param("customerId") int customerId);
 }

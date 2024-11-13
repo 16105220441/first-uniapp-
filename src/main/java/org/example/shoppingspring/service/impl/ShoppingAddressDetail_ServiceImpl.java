@@ -62,4 +62,10 @@ public class ShoppingAddressDetail_ServiceImpl implements ShoppingAddressDetail_
     public void update_default(ShoppingAddressDetail shoppingAddressDetail) {
         shoppingAddressDetail_mapper.update_default(shoppingAddressDetail);
     }
+
+    /**
+     * @param customerId
+     * @return
+     */
+
 }

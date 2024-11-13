@@ -13,14 +13,27 @@
     <select id="getProID"
             resultType="products">
         select * from shopping_datasource.products
+
         <where>
             <if test="categoryId != null and categoryId != ''">
                 category_id = #{categoryId}
             </if>
             <if test="productName != null and productName != ''">
+
                 and name like CONCAT('%',#{productName},'%')
             </if>
         </where>
+        <if test="orderType != 'default'">
+            order by
+            <choose>
+                <when test="orderType == 'discountPrice'">
+                    discount_price
+                </when>
+                <when test="orderType == 'productSales'">
+                    product_sales
+                </when>
+            </choose>
+        </if>
     </select>
 
     <select id="getDetail"

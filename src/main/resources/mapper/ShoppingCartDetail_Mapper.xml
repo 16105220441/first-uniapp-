@@ -19,6 +19,10 @@
         select * from shopping_datasource.shopping_cart_detail where
             product_id = #{productId} and customer_id = #{customerId}
     </select>
+    <select id="get_cartProTotalNum" resultType="java.lang.Integer">
+        select count(*) from shopping_datasource.shopping_cart_detail where
+            customer_id = #{customerId}
+    </select>
 
     <update id="updateProductQuantity">
         update shopping_datasource.shopping_cart_detail

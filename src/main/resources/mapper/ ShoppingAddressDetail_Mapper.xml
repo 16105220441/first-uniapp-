@@ -27,17 +27,21 @@
     </select>
 
 
-     <update id="updateInfo">
-        update shopping_datasource.shopping_address_detail
-        set name       =
+
+    <insert id="updateInfo" parameterType="shoppingAddressDetail">
+
+        CALL UpdateAddressDetail(
+                #{shoppingAddressDetail.addressDetailId},
+                #{shoppingAddressDetail.customerId},
                 #{shoppingAddressDetail.name},
-            province   = #{shoppingAddressDetail.province},
-            city       = #{shoppingAddressDetail.city},
-            county    = #{shoppingAddressDetail.addressDetail},
-            is_default = #{shoppingAddressDetail.isDefault},
-            tel        = #{shoppingAddressDetail.tel}
-        where address_detail_id = #{shoppingAddressDetail.addressDetailId}
-    </update>
+                #{shoppingAddressDetail.province},
+                #{shoppingAddressDetail.city},
+                #{shoppingAddressDetail.county},
+                #{shoppingAddressDetail.addressDetail},
+                #{shoppingAddressDetail.tel},
+                #{shoppingAddressDetail.isDefault}
+             )
+    </insert>
     <update id="update_default">
         update shopping_datasource.shopping_address_detail
         set is_default =

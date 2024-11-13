@@ -39,14 +39,16 @@ public class ProductsController {
 
     @GetMapping("/by_Category/id&&name")
     public Map<String,Object> getPro(@RequestParam(name = "categoryId",
-            required = false) String categoryId,
+            required = false) Integer categoryId,
                                        @RequestParam(name = "goodsName",required = false) String productName,
                                        @RequestParam(defaultValue =
             "1") int page,
-                                       @RequestParam(defaultValue = "5") int travelPageSize){
+                                       @RequestParam(defaultValue = "5") int travelPageSize,
+                                     @RequestParam(defaultValue = "default",
+                                             required = false) String orderType ){
         List<Products> productsList = productsService.getProID(categoryId,
                 productName,
-                page,travelPageSize);
+                page,travelPageSize,orderType);
         PageInfo<Products> pageInfo = new PageInfo<>(productsList);
         Map<String, Object> map = new HashMap<>();
         map.put("productsData", pageInfo);

@@ -7,5 +7,5 @@ public interface LoginService {
 
     Customers findByPhone(String phone);
 
-    void register(String phone);
+    void register(String phone,String nickName);
 }

@@ -14,4 +14,6 @@ public interface ShoppingAddressDetail_Service {
     ShoppingAddressDetail get_default(String isDefault, int customerId);
 
     void update_default(ShoppingAddressDetail shoppingAddressDetail);
+
+
 }

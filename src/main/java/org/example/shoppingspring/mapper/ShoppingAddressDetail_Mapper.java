@@ -18,4 +18,6 @@ public interface ShoppingAddressDetail_Mapper {
                                       @Param("customerId") int customerId);
 
     void update_default(@Param("shoppingAddressDetail") ShoppingAddressDetail shoppingAddressDetail);
+
+
 }

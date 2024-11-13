@@ -57,10 +57,20 @@ public class ShoppingCartDetail_ServiceImpl implements ShoppingCartDetail_Servic
     /**
      * @param productId
      * @param customerId
+     * @return
      */
     @Override
-    public void delete_cartDetail(int productId, int customerId) {
-        shoppingCartDetail_mapper.delete_cartDetail(productId,
+    public int delete_cartDetail(int productId, int customerId) {
+       return shoppingCartDetail_mapper.delete_cartDetail(productId,
                 customerId);
+    }
+
+    /**
+     * @param customerId
+     * @return
+     */
+    @Override
+    public int get_cartProTotalNum(int customerId) {
+        return shoppingCartDetail_mapper.get_cartProTotalNum(customerId);
     }
 }

@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetail {
+@Data
+public class TlDistrict {
 
-  private long productDetailId;
-  private String productCarousel;
-  private long productId;
-
-
+    private int districtId,cityId;
+    private String districtName;
 }

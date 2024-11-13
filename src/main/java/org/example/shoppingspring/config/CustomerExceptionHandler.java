@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomerExceptionHandler {
 
     @ExceptionHandler(LoginFailException.class)
-    public Result ErrorHandler(LoginFailException e) {
+    public Result<?> ErrorHandler(LoginFailException e) {
         return Result.error(403, "用户名密码错误");
     }
     @ExceptionHandler(ValidateCodeException.class)

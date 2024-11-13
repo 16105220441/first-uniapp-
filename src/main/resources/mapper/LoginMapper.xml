@@ -12,6 +12,7 @@
     </select>
 
     <insert id="refister">
-        insert into shopping_datasource.customers (phone) value (#{phone})
+        insert into shopping_datasource.customers (phone,pick_name) value
+            (#{phone},#{nickName})
     </insert>
 </mapper>

@@ -1,5 +1,10 @@
 
 spring:
+  profiles:
+    active: dev
+  web:
+    resources:
+      static-locations: classpath:/swiper
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -27,4 +32,11 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
+server:
+  port: 8082
+  address: 192.168.20.239
+
+
+
+
 

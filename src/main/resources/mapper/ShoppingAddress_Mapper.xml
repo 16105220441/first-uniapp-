@@ -37,7 +37,7 @@
             <result property="name" column="name"/>
             <result property="province" column="province"/>
             <result property="city" column="city"/>
-            <result property="county" column="country"/>
+            <result property="county" column="county"/>
             <result property="addressDetail" column="address_detail"/>
             <result property="isDefault" column="is_default"/>
             <result property="tel" column="tel"/>

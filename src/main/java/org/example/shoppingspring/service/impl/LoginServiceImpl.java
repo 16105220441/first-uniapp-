@@ -37,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
      * @param phone
      */
     @Override
-    public void register(String phone) {
-        this.loginMapper.refister(phone);
+    public void register(String phone,String nickName) {
+        this.loginMapper.refister(phone,nickName);
     }
 }

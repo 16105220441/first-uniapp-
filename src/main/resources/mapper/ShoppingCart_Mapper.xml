@@ -40,6 +40,9 @@
         </if>
         </where>
     </select>
+    <select id="get_cartProTotalNum" resultType="java.lang.Integer">
+        select count(*) from shopping_datasource.shopping_cart where customers_id = #{customerId}
+    </select>
     <resultMap id="cartList" type="shoppingCart">
         <id property="id" column="id"/>
         <result property="customersId" column="customers_id"/>
@@ -60,6 +63,7 @@
                         column="product_image"/>
                 <result property="discountPrice"
                         column="discount_price"/>
+                <result property="stockTotal" column="stock_total"/>
 
             </association>
         </collection>

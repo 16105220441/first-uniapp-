@@ -1,5 +1,6 @@
 package org.example.shoppingspring.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.example.shoppingspring.domain.ShoppingCart;
 import org.example.shoppingspring.domain.ShoppingCartDetail;
 import org.example.shoppingspring.service.ShoppingCart_Service;
@@ -28,23 +29,33 @@ public class ShoppingCart_Controller {
 
     @GetMapping("/list")
     public Map<String,Object> get_cartList(@RequestParam(required = false) String customerId,
-                                           @RequestParam(required = false) String detailId){
-        List<ShoppingCart> shoppingCarts = new java.util.ArrayList<>(List.of());
+                                           @RequestParam(required = false) String detailId,
+                                           @RequestParam(required = false,
+                                                   defaultValue = "1") int  pageNum,
+                                           @RequestParam(required = false,
+                                                   defaultValue = "5") int pageSize){
+        List<ShoppingCart> shoppingCarts = List.of();
         if(detailId != null){
             String []detailIdArray = detailId.split(",");
 
             for (String s : detailIdArray) {
-                shoppingCarts.add(shoppingCart_service.get_cartList(customerId, s));
+               shoppingCarts = shoppingCart_service.get_cartList(customerId,
+                       s);
             }
         }
         else{
-            shoppingCarts.add(shoppingCart_service.get_cartList(customerId, null));
+            shoppingCarts  =   shoppingCart_service.get_cartList(customerId,
+                    null, pageNum,pageSize);
+
         }
+        PageInfo<ShoppingCart> pageInfo = new PageInfo<>(shoppingCarts);
 
         Map<String,Object> map = new HashMap<>();
-        map.put("cartList",shoppingCarts);
+        map.put("cartList",pageInfo);
         return map;
     }
+
+
 
 
 

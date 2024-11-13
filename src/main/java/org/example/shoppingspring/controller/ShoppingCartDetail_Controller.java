@@ -6,6 +6,8 @@ import org.example.shoppingspring.domain.ShoppingCartDetail;
 import org.example.shoppingspring.service.ProductsService;
 import org.example.shoppingspring.service.ShoppingCartDetail_Service;
 import org.example.shoppingspring.service.ShoppingCart_Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.Map;
 @RequestMapping("/cartDetail")
 public class ShoppingCartDetail_Controller {
 
+    private static final Logger log = LoggerFactory.getLogger(ShoppingCartDetail_Controller.class);
     @Autowired
     ShoppingCartDetail_Service shoppingCartDetail_service;
 
@@ -27,23 +30,24 @@ public class ShoppingCartDetail_Controller {
     ShoppingCart_Service shoppingCart_service;
 
     @PostMapping("/add/product")
-    public void addToCartDetail(@RequestParam int productId,
-                                @RequestParam int quantity,
-                                @RequestParam int customerId) {
-        Products products = productsService.getProInfo(productId);
+    public void addToCartDetail(@RequestBody ShoppingCartDetail shoppingCartDetail1) {
+
+        Products products =
+                productsService.getProInfo((int) shoppingCartDetail1.getProductId());
         double price = products.getDiscountPrice();
 
-        double itemTotalPrice = price * quantity;
+        double itemTotalPrice = price * shoppingCartDetail1.getQuantity();
 
-        ShoppingCart shoppingCart = shoppingCart_service.get_byCustomerId(customerId);
+        ShoppingCart shoppingCart =
+                shoppingCart_service.get_byCustomerId(shoppingCartDetail1.getCustomerId());
        /* if (shoppingCart == null) {
             shoppingCart_service.addCart(customerId);
             shoppingCart = shoppingCart_service.get_byCustomerId(customerId);
         }
 */
         ShoppingCartDetail shoppingCartDetail =
-                shoppingCartDetail_service.isProductInCart(productId,
-                        customerId);
+                shoppingCartDetail_service.isProductInCart( shoppingCartDetail1.getProductId(),
+                        shoppingCartDetail1.getCustomerId()) ;
         long change_totalQuantity = 0;
         double change_itemTotalPrice = 0;
         if (shoppingCartDetail == null) {
@@ -51,8 +55,9 @@ public class ShoppingCartDetail_Controller {
           /* if(quantity > products.getStockTotal()){
                throw new ProductException("库存量不足");
            }*/
-            shoppingCartDetail_service.addToCartDetail(productId, quantity,
-                    itemTotalPrice, shoppingCart.getId(), customerId);
+            shoppingCartDetail_service.addToCartDetail(Math.toIntExact(shoppingCartDetail1.getProductId()), Math.toIntExact(shoppingCartDetail1.getQuantity()),
+                    itemTotalPrice, shoppingCart.getId(),
+                    Math.toIntExact(shoppingCartDetail1.getCustomerId()));
             /* productsService.update_stockTotal(quantity);*/
         } else {
             /*if(quantity+shoppingCartDetail.getQuantity() > products.getStockTotal()){
@@ -60,12 +65,13 @@ public class ShoppingCartDetail_Controller {
             }*/
             change_totalQuantity = shoppingCartDetail.getQuantity();
             change_itemTotalPrice = shoppingCartDetail.getItemTotalPrice();
-            shoppingCartDetail_service.updateProductQuantity(shoppingCartDetail.getDetailId(), quantity, itemTotalPrice);
+            shoppingCartDetail_service.updateProductQuantity(shoppingCartDetail.getDetailId(), (int) shoppingCartDetail1.getQuantity(), itemTotalPrice);
 
 
         }
-        shoppingCartDetail = shoppingCartDetail_service.isProductInCart(productId,
-                customerId);
+        shoppingCartDetail =
+                shoppingCartDetail_service.isProductInCart(shoppingCartDetail1.getProductId(),
+               shoppingCartDetail1.getCustomerId());
         change_totalQuantity =
                 shoppingCartDetail.getQuantity() - change_totalQuantity;
         change_itemTotalPrice =
@@ -103,18 +109,33 @@ public class ShoppingCartDetail_Controller {
     }
 
     @PostMapping("/delete")
-    public void delete_cartDetail(@RequestBody ShoppingCart shoppingCart) {
-        List<ShoppingCartDetail> shoppingCartDetailList =
-                shoppingCart.getShoppingCartDetails();
-        for (ShoppingCartDetail cartDetail : shoppingCartDetailList) {
-            ShoppingCartDetail shoppingCartDetail =
-                    shoppingCartDetail_service.isProductInCart(cartDetail.getProductId(),
-                            cartDetail.getCustomerId());
-            shoppingCartDetail_service.delete_cartDetail((int) cartDetail.getProductId(),
-                    (int) cartDetail.getCustomerId());
+    public void delete_cartDetail(@RequestBody List<ShoppingCartDetail> shoppingCartDetailList) {
 
-            shoppingCart_service.update_info(shoppingCartDetail.getShoppingCartId(), -shoppingCartDetail.getItemTotalPrice(), -shoppingCartDetail.getQuantity());
+
+    for (ShoppingCartDetail shoppingCartDetailItem : shoppingCartDetailList) {
+        ShoppingCartDetail shoppingCartDetail =
+                shoppingCartDetail_service.isProductInCart(shoppingCartDetailItem.getProductId(),shoppingCartDetailItem.getCustomerId());
+      int i =
+              shoppingCartDetail_service.delete_cartDetail((int) shoppingCartDetail.getProductId(), (int) shoppingCartDetailItem.getCustomerId());
+
+      log.error(String.valueOf(i));
+        shoppingCart_service.update_info(shoppingCartDetail.getShoppingCartId(),-shoppingCartDetail.getItemTotalPrice(),shoppingCartDetail.getQuantity());
         }
 
+
+    }
+
+    @GetMapping("/get/Info")
+    public boolean get_ShoppingCartDetail(@RequestParam int customerId,
+                                          @RequestParam int  productId){
+
+     ShoppingCartDetail shoppingCartDetail =
+             shoppingCartDetail_service.isProductInCart(productId,customerId);
+        return shoppingCartDetail != null;
+    }
+
+    @GetMapping("/get/cartProTotalNum")
+    public int get_cartProTotalNum(@RequestParam int customerId){
+        return shoppingCartDetail_service.get_cartProTotalNum(customerId);
     }
 }
