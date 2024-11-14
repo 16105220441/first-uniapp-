@@ -7,14 +7,15 @@ spring:
       static-locations: classpath:/swiper
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
+    username: shopping_datasource
     password: 113000
-    url: jdbc:mysql://localhost:3306/shopping_datasource?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://116.205.188.40:3306/shopping_datasource?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
   data:
     redis:
       database: 0
-      host: localhost
+      host: 116.205.188.40
       port: 6379
+      password: 123321
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -34,7 +35,8 @@ pagehelper:
   support-methods-arguments: true
 server:
   port: 8082
-  address: 192.168.20.239
+
+
 
 
 
